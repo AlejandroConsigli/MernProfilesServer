@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+    profilesserver:
+        container_name: servercontainer
+        restart: always
+        build: .
+        ports:
+            - "5000:5000"
+        links:
+            - profilesdatabase
+        volumes:
+            - .:/usr/src/app
+    profilesdatabase:
+        container_name: databasecontainer
+        image: mongo
+        ports:
+            - "27018:27017"
+        logging: 
+            driver: none
