@@ -155,52 +155,14 @@ router.post("/forgot", [check("email", "Valid email is required").isEmail()], as
 
     const token = jwt.sign(payload, config.get("jwtSecret"), { expiresIn: 1800 });
 
-    const subject = "Reset password";
+    const subject = "Recover password";
     const html = `
-        <h2>Please go to below link to reset your account password</h2>
-        <p>${req.headers.origin}/reset/${token}</p>
+        <h2>Please go to below link to recover your account password</h2>
+        <p>${req.headers.origin}/recover/${token}</p>
         <p><b>NOTE: </b> The activation link expires in 30 minutes.</p>
         `;
 
     sendEmail(req.body.email, subject, html, res);
-});
-
-router.get("/reset/:token", async (req, res) => {
-    const token = req.params.token;
-
-    if (token) {
-        try {
-            let decoded;
-            try {
-                decoded = jwt.verify(token, config.get("jwtSecret"));
-            } catch {
-                return res.status(401).json({ msg: "Token is invalid" });
-            }
-            const { email, password } = decoded;
-
-            let userFields = {};
-
-            const salt = await bcrypt.genSalt(10);
-            userFields.password = await bcrypt.hash(password, salt);
-
-            user = await User.findOneAndUpdate(
-                { email },
-                { $set: userFields },
-                { new: true }
-            ).select("-password");
-
-            const payload = {
-                user: {
-                    id: user.id,
-                },
-            };
-            jwt.sign(payload, config.get("jwtSecret"), { expiresIn: 86400 });
-            res.status(200).json({ token });
-        } catch (err) {
-            console.log(err.message);
-            res.status(500).send("Server Error");
-        }
-    }
 });
 
 module.exports = router;
