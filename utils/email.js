@@ -18,7 +18,7 @@ sendEmail = (email, subject, html, res) => {
 
     transporter.sendMail(mailOptions, (err) => {
         if(err) {
-            res.status(502).json({ msg: "Email sent error", err });
+            res.status(502).json({ msg: "Email sent error" });
             console.log(err);
         } else {
             res.status(200).json("Email sent");
