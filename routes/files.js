@@ -24,7 +24,7 @@ router.post("/:id", auth, multerImage, validationImage, async (req, res) => {
         });
 
         await sharp(original)
-            .jpeg({
+            .png({
                 quality: 30
             })
             .rotate()
