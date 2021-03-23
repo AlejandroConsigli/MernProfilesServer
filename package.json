@@ -19,8 +19,8 @@
     "homepage": "https://github.com/AlejandroConsigli/Profiles#readme",
     "devDependencies": {
         "concurrently": "^5.3.0",
-        "nodemon": "^2.0.5",
-        "loadtest": "*"
+        "loadtest": "*",
+        "nodemon": "^2.0.5"
     },
     "dependencies": {
         "bcryptjs": "^2.4.3",
