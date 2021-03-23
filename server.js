@@ -19,7 +19,7 @@ app.listen(PORT, (req, res) => {
 });
 
 app.get("/api/", (req, res) => {
-    res.send("Profiles Api");
+    res.send("Profiles api");
 });
 
 app.use("/api/auth", require("./routes/auth"));
