@@ -7,7 +7,6 @@ const Profile = require("../models/Profile");
 
 router.get("/me", auth, async (req, res) => {
     try {
-        const profiles = await Profile.find();
         const profile = await Profile.findOne({
             userData: req.user.id,
         }).populate("userData", ["name", "lastname"]);
